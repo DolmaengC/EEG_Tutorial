@@ -68,5 +68,5 @@ for i = 1:length(time_intervals)
     subplot(2, length(time_intervals), i + length(time_intervals));
     topoplot(erd_right(:, i), eeg_data.chanlocs);
     title(['R ' num2str(time_intervals(i)) ' ms']);
-    colorbar;
+    colorbar
 end

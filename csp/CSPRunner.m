@@ -1,5 +1,5 @@
 % 파일 이름 설정
-fileName = '../LRHandMI/s01.mat';
+fileName = '../../data/LRHandMI/s01.mat';
 
 % EEGData 객체 생성
 eeg_data = EEGData(fileName);
@@ -8,15 +8,15 @@ eeg_data = EEGData(fileName);
 eeg_data = eeg_data.readFile();
 
 % 원시 데이터 시각화 (이벤트 표시 X)
-plotData(eeg_data.imagery_left(50, :), eeg_data.imagery_right(13, :), ...
+plotData(eeg_data.imagery_left, eeg_data.imagery_right, ...
          0, ...
          'Raw Imagery Left (Channel 50) and Right (Channel 13)', ...
          'Raw Imagery Left (Channel 50)', 'Raw Imagery Right (Channel 13)');
 
 
 % 밴드패스 필터링 (8-30 Hz) - 전체 데이터 필터링
-filtered_imagery_left = bandPassFilter(eeg_data.imagery_left, eeg_data.srate, 4, 8, 14);
-filtered_imagery_right = bandPassFilter(eeg_data.imagery_right, eeg_data.srate, 4, 8, 14);
+filtered_imagery_left = bandPassFilter(eeg_data.imagery_left, eeg_data.srate, 4, 8, 30);
+filtered_imagery_right = bandPassFilter(eeg_data.imagery_right, eeg_data.srate, 4, 8, 30);
 
 % 데이터 전처리: Centering and Scaling
 preprocessed_imagery_left = preprocessData(filtered_imagery_left);
@@ -72,7 +72,7 @@ plotData(transformed_data1(50, :), transformed_data2(13, :), events, ...
 
 
 % N초 구간 선택
-duration = 10; % seconds
+duration = 7; % seconds
 num_samples = duration * eeg_data.srate;
 
 transformed_data1 = transformed_data1(:, 1:num_samples);
